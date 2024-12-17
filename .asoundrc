@@ -1,18 +1,23 @@
 pcm.!default {
-    type null
+    type pulse
+    fallback "sysdefault"
     hint {
-        description "Default virtual device"
+        description "Default Audio Device"
     }
 }
 
 ctl.!default {
-    type null
+    type pulse
+    fallback "sysdefault"
 }
 
-pcm.null {
-    type null
+# Virtual MIDI device
+pcm.virtual {
+    type hw
+    card 0
 }
 
-ctl.null {
-    type null
+ctl.virtual {
+    type hw
+    card 0
 }

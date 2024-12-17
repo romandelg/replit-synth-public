@@ -6,6 +6,7 @@ requires-python = ">=3.11"
 dependencies = [
     "numpy>=2.2.0",
     "pygame>=2.6.1",
+    "pyqt5>=5.15.11",
     "scipy>=1.14.1",
     "sounddevice>=0.5.1",
 ]
