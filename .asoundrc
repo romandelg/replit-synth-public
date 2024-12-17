@@ -1,0 +1,18 @@
+pcm.!default {
+    type null
+    hint {
+        description "Default virtual device"
+    }
+}
+
+ctl.!default {
+    type null
+}
+
+pcm.null {
+    type null
+}
+
+ctl.null {
+    type null
+}
