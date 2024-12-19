@@ -194,26 +194,38 @@ class SynthCore:
         cutoff = 20  # 20 Hz high-pass filter
         self.hp_b, self.hp_a = butter(2, cutoff / nyquist, btype='high')
         
-    def process_midi(self):
-        if not self.midi_input:
-            return
-            
-        if self.midi_input.poll():
-            events = self.midi_input.read(10)
-            for event in events:
-                status = event[0][0]
-                data1 = event[0][1]
-                data2 = event[0][2]
-                
-                if status >= 144 and status <= 159:  # Note On
-                    if data2 > 0:
-                        self.note_on(data1, data2)
-                    else:
-                        self.note_off(data1)
-                elif status >= 128 and status <= 143:  # Note Off
+    def process_midi_event(self, status, data1, data2):
+        try:
+            # Note On messages (144-159)
+            if status >= 144 and status <= 159:
+                if data2 > 0:  # velocity > 0 means note on
+                    self.note_on(data1, data2)
+                else:  # velocity = 0 means note off
                     self.note_off(data1)
-                elif status >= 176 and status <= 191:  # CC
-                    self.handle_cc(data1, data2)
+                    
+            # Note Off messages (128-143)
+            elif status >= 128 and status <= 143:
+                self.note_off(data1)
+                
+            # CC messages (176-191)
+            elif status >= 176 and status <= 191:
+                self.handle_cc(data1, data2)
+                
+            # Program Change (192-207)
+            elif status >= 192 and status <= 207:
+                # Handle program changes if needed
+                pass
+                
+            # Pitch Bend (224-239)
+            elif status >= 224 and status <= 239:
+                # Convert 14-bit pitch bend value
+                bend_value = (data2 << 7) + data1
+                # Normalize to [-1, 1]
+                normalized_bend = (bend_value / 8192.0) - 1.0
+                # TODO: Implement pitch bend handling
+                
+        except Exception as e:
+            logger.error(f"Error processing MIDI event: {e}")
                     
     def note_on(self, note_num, velocity):
         # Create new voice and manage polyphony
