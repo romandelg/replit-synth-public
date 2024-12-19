@@ -109,6 +109,12 @@ async def midi_listener(synth):
 
 def main():
     try:
+        print("Setting up environment for headless mode...")
+        os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+        os.environ['QT_LOGGING_RULES'] = '*.debug=false;qt.qpa.*=false'
+        os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-runner'
+        os.environ['DISPLAY'] = ':0'
+
         print("Initializing QApplication...")
         app = QApplication(sys.argv)
         
@@ -116,8 +122,13 @@ def main():
         synth = Synth()
         
         print("Creating GUI...")
-        gui = SynthGUI(synth)
-        gui.show()
+        try:
+            gui = SynthGUI(synth)
+            gui.show()
+            print("GUI initialized successfully")
+        except Exception as e:
+            print(f"Warning: GUI initialization had issues: {e}")
+            print("Continuing with command-line interface...")
         
         print("Setting up event loop...")
         loop = asyncio.get_event_loop()

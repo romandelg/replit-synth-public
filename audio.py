@@ -6,6 +6,7 @@ SAMPLE_RATE = 44100
 class Synth:
     def __init__(self):
         self.active_notes = {}
+        self.voices = {}  # For GUI compatibility
         self.param_callbacks = []  # List to store parameter update callbacks
         
         # Initialize synthesis parameters

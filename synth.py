@@ -7,6 +7,7 @@ from collections import deque
 from synth_core import SynthCore, SAMPLE_RATE, BUFFER_SIZE
 import logging
 import pygame
+from scipy.signal import butter, lfilter
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -34,17 +35,24 @@ class AsyncSynthesizer:
 
             # Try different audio backends
             try:
-                # Force dummy device for Replit environment
-                output_device = 'null'
-                logger.info("Using null audio device for Replit environment")
+                # List available devices and try to find a suitable output
+                devices = sd.query_devices()
+                output_device = None
                 
-                # Configure minimal stream settings
+                # Try to find a valid output device
+                for i, device in enumerate(devices):
+                    if device['max_output_channels'] > 0:
+                        output_device = i
+                        logger.info(f"Using audio output device: {device['name']}")
+                        break
+                
+                # Configure stream settings
                 stream_settings = {
                     'samplerate': SAMPLE_RATE,
                     'channels': 1,
                     'dtype': np.float32,
                     'callback': self._audio_callback,
-                    'device': output_device
+                    'latency': 'high'  # Use high latency for stability
                 }
                     
                 if output_device is None:
@@ -66,23 +74,20 @@ class AsyncSynthesizer:
                     stream_settings['device'] = output_device
 
                 try:
-                    if output_device == 'dummy':
-                        # Use minimal settings for dummy device
+                    if output_device is None:
+                        # Use dummy output for testing/headless environment
+                        logger.warning("No audio output device found, using dummy output")
                         stream = sd.OutputStream(
                             samplerate=SAMPLE_RATE,
                             channels=1,
                             dtype=np.float32,
                             callback=self._audio_callback,
-                            finished_callback=None
+                            device='default'
                         )
                     else:
-                        # Use the selected output device
+                        # Use configured output device
                         stream_settings['device'] = output_device
-                        stream = sd.OutputStream(
-                            **stream_settings,
-                            latency='high',  # Use high latency for stability
-                            prime_output_buffers_using_stream_callback=True
-                        )
+                        stream = sd.OutputStream(**stream_settings)
                     logger.info("Successfully initialized audio output")
                 except Exception as e:
                     logger.error(f"Failed to initialize audio device: {e}")
@@ -195,10 +200,16 @@ class AsyncSynthesizer:
             target_size = max(min_samples * 4, BUFFER_SIZE * 2)  # Keep quadruple the required samples
             current_size = len(self.audio_buffer)
             
+            logger.debug(f"Filling buffer: current size={current_size}, target={target_size}")
+            
             while len(self.audio_buffer) < target_size and self.running:
                 # Generate in smaller chunks for better responsiveness
                 chunk_size = min(1024, target_size - len(self.audio_buffer))
-                new_samples = self.synth_core.get_next_samples(chunk_size)
+                try:
+                    new_samples = self.synth_core.get_next_samples(chunk_size)
+                except Exception as e:
+                    logger.error(f"Error generating samples: {e}")
+                    new_samples = np.zeros(chunk_size)
                 
                 if new_samples is not None:
                     samples = new_samples.reshape(-1)

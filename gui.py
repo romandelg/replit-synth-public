@@ -30,13 +30,6 @@ class SynthGUI(QMainWindow):
         if hasattr(self.synth_core, 'param_callbacks'):
             self.synth_core.param_callbacks.append(self.update_gui)
         
-        # Create main widget and layout
-        main_widget = QWidget()
-        self.setCentralWidget(main_widget)
-        
-        # Create horizontal layout for left panel and visualization
-        main_layout = QHBoxLayout(main_widget)
-        
         # Left panel for controls
         left_panel = QWidget()
         left_layout = QVBoxLayout(left_panel)
@@ -240,11 +233,19 @@ class SynthGUI(QMainWindow):
             
             # Update voice indicators
             try:
-                active_voices = list(self.synth_core.voices.keys())
+                if hasattr(self.synth_core, 'voices'):
+                    active_voices = list(self.synth_core.voices.keys())
+                else:
+                    active_voices = list(self.synth_core.active_notes.keys())
+                    
                 for i, indicator in enumerate(self.voice_indicators):
                     if i < len(active_voices):
                         note = active_voices[i]
-                        velocity = self.synth_core.voices[note].velocity
+                        # Use either velocity from voices or default to 1.0
+                        if hasattr(self.synth_core, 'voices'):
+                            velocity = getattr(self.synth_core.voices[note], 'velocity', 1.0)
+                        else:
+                            velocity = 1.0
                         color = int(velocity * 255)
                         indicator.setStyleSheet(
                             f"background-color: rgb(0, {color}, 0); border-radius: 15px;"
