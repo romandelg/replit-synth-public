@@ -6,6 +6,7 @@ import threading
 from collections import deque
 from synth_core import SynthCore, SAMPLE_RATE, BUFFER_SIZE
 import logging
+import pygame
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -20,6 +21,7 @@ class AsyncSynthesizer:
         # Audio stream configuration
         self.buffer_size = 1024  # Smaller chunks for lower latency
         self.streams = []
+        self.midi_input = None
         
     async def start(self):
         # Initialize audio output
@@ -32,28 +34,23 @@ class AsyncSynthesizer:
 
             # Try different audio backends
             try:
-                # Get list of available devices
-                devices = sd.query_devices()
-                logger.info(f"Available devices:\n{devices}")
+                # Force dummy device for Replit environment
+                output_device = 'null'
+                logger.info("Using null audio device for Replit environment")
                 
-                # Try different audio backends and devices
-                output_device = None
-                backends = ['pulse', 'alsa', 'jack', 'default']
-                
-                for backend in backends:
-                    try:
-                        try:
-                            with sd.Stream(device=backend, samplerate=SAMPLE_RATE, channels=1, dtype=np.float32):
-                                output_device = backend
-                                logger.info(f"Selected {backend} output device")
-                                break
-                        except sd.PortAudioError:
-                            continue
-                            if output_device:
-                                break
-                    except Exception as e:
-                        logger.warning(f"Could not use {backend} backend: {e}")
-                        continue
+                # Configure minimal stream settings
+                stream_settings = {
+                    'samplerate': SAMPLE_RATE,
+                    'channels': 1,
+                    'dtype': np.float32,
+                    'callback': self._audio_callback,
+                    'device': output_device
+                }
+                    
+                if output_device is None:
+                    # Fall back to dummy device if no output device found
+                    logger.warning("No output devices found, using dummy device")
+                    output_device = 'dummy'
                 
                 # Configure stream with optimal settings for continuous audio
                 stream_settings = {
@@ -69,27 +66,27 @@ class AsyncSynthesizer:
                     stream_settings['device'] = output_device
 
                 try:
-                    # Try virtual audio device first
-                    stream_settings['device'] = 'virtual'
-                    stream = sd.OutputStream(**stream_settings)
-                    logger.info("Initialized virtual audio device")
-                except Exception as virtual_error:
-                    logger.warning(f"Could not initialize virtual device: {virtual_error}")
-                    try:
-                        # Try null device as fallback
-                        stream_settings['device'] = None
+                    if output_device == 'dummy':
+                        # Use minimal settings for dummy device
+                        stream = sd.OutputStream(
+                            samplerate=SAMPLE_RATE,
+                            channels=1,
+                            dtype=np.float32,
+                            callback=self._audio_callback,
+                            finished_callback=None
+                        )
+                    else:
+                        # Use the selected output device
+                        stream_settings['device'] = output_device
                         stream = sd.OutputStream(
                             **stream_settings,
                             latency='high',  # Use high latency for stability
                             prime_output_buffers_using_stream_callback=True
                         )
-                        logger.info("Initialized null audio device")
-                    except Exception as null_error:
-                        logger.warning(f"Could not initialize null device: {null_error}")
-                        # Last resort: try default system device
-                        stream_settings.pop('device', None)  # Remove device specification
-                        stream = sd.OutputStream(**stream_settings)
-                        logger.info("Initialized default system audio device")
+                    logger.info("Successfully initialized audio output")
+                except Exception as e:
+                    logger.error(f"Failed to initialize audio device: {e}")
+                    raise
                 logger.info("Successfully initialized audio output")
                 
             except Exception as e:
@@ -239,12 +236,63 @@ class AsyncSynthesizer:
             
     async def _midi_loop(self):
         try:
+            pygame.midi.init()
+            
+            # List all available MIDI devices
+            logger.info("\nAvailable MIDI devices:")
+            midi_devices = []
+            for i in range(pygame.midi.get_count()):
+                info = pygame.midi.get_device_info(i)
+                if info[2]:  # is_input
+                    device_name = info[1].decode()
+                    midi_devices.append((i, device_name))
+                    logger.info(f"{i}: {device_name} (Input)")
+                else:
+                    logger.info(f"{i}: {info[1].decode()} (Output)")
+            
+            if not midi_devices:
+                logger.warning("No MIDI input devices found!")
+                return
+                
+            # Try to connect to each input device
+            for device_id, device_name in midi_devices:
+                try:
+                    self.midi_input = pygame.midi.Input(device_id)
+                    logger.info(f"Successfully connected to MIDI device: {device_name}")
+                    break
+                except Exception as e:
+                    logger.error(f"Failed to connect to MIDI device {device_name}: {e}")
+                    continue
+                    
+            if not self.midi_input:
+                logger.warning("Could not connect to any MIDI input device")
+                return
+
+            logger.info("Starting MIDI input loop")
             while self.running:
-                # Process MIDI input
-                self.synth_core.process_midi()
-                await asyncio.sleep(0.001)  # Small sleep to prevent busy waiting
+                try:
+                    if self.midi_input.poll():
+                        midi_events = self.midi_input.read(10)
+                        for event in midi_events:
+                            # Log MIDI events for debugging
+                            status = event[0][0]
+                            data1 = event[0][1]
+                            data2 = event[0][2]
+                            logger.debug(f"MIDI event - status: {status}, data1: {data1}, data2: {data2}")
+                            
+                            self.synth_core.process_midi_event(status, data1, data2)
+                    await asyncio.sleep(0.001)  # Small sleep to prevent busy waiting
+                    
+                except Exception as e:
+                    logger.error(f"Error processing MIDI event: {e}")
+                    continue
+                    
         except Exception as e:
-            logger.error(f"Error in MIDI loop: {e}")
+            logger.error(f"Fatal error in MIDI loop: {e}")
+        finally:
+            if hasattr(self, 'midi_input') and self.midi_input:
+                self.midi_input.close()
+                logger.info("Closed MIDI input device")
             
     async def _audio_generation_loop(self):
         try:
@@ -258,6 +306,9 @@ class AsyncSynthesizer:
     def cleanup(self):
         self.running = False
         self.synth_core.cleanup()
+        if hasattr(self, 'midi_input') and self.midi_input:
+            self.midi_input.close()
+        pygame.midi.quit()
 
 if __name__ == "__main__":
     synth = AsyncSynthesizer()
