@@ -12,7 +12,8 @@ import sys
 
 # Configure Qt for headless/offscreen rendering
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
-os.environ['QT_LOGGING_RULES'] = '*.debug=false;qt.qpa.*=false'
+os.environ['QT_LOGGING_RULES'] = '*.debug=false;qt.qpa.*=false;qt.qpa.fonts.*=false'
+os.environ['QT_FONT_DPI'] = '96'
 os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-runner'
 os.environ['DISPLAY'] = ':0'  # Virtual display for headless operation
 
@@ -131,7 +132,11 @@ def main():
             print("Continuing with command-line interface...")
         
         print("Setting up event loop...")
-        loop = asyncio.get_event_loop()
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
         
         # Start audio and MIDI processing in background
         print("Starting audio processing...")
