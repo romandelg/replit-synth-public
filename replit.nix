@@ -1,5 +1,6 @@
 {pkgs}: {
   deps = [
+    pkgs.freefont_ttf
     pkgs.xsimd
     pkgs.libxcrypt
     pkgs.jack2

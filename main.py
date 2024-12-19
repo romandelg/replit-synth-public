@@ -4,9 +4,17 @@ import numpy as np
 import sounddevice as sd
 from audio import Synth
 from midi import MidiHandler
+import os
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import Qt
 from gui import SynthGUI
 import sys
+
+# Configure Qt for headless/offscreen rendering
+os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+os.environ['QT_LOGGING_RULES'] = '*.debug=false;qt.qpa.*=false'
+os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-runner'
+os.environ['DISPLAY'] = ':0'  # Virtual display for headless operation
 
 SAMPLE_RATE = 44100
 
@@ -21,41 +29,66 @@ async def audio_output_loop(synth):
         nonlocal buffer_start, buffer_end, waveform_buffer
         if status:
             print(f"Audio stream error: {status}")
-
-        # Check if there is enough audio data in the buffer
-        available_frames = (buffer_end - buffer_start) % buffer_size
-        if available_frames < frames:
-            # Fill with silence if insufficient data
-            outdata[:] = np.zeros((frames, 1))
+            outdata.fill(0)
             return
 
-        # Extract the next chunk of audio from the buffer
-        for i in range(frames):
-            outdata[i] = waveform_buffer[(buffer_start + i) % buffer_size]
+        try:
+            # Check if there is enough audio data in the buffer
+            available_frames = (buffer_end - buffer_start) % buffer_size
+            if available_frames < frames:
+                print(f"Buffer underrun: {available_frames} < {frames}")
+                outdata.fill(0)
+                return
 
-        # Update the buffer start position
-        buffer_start = (buffer_start + frames) % buffer_size
+            # Extract the next chunk of audio from the buffer
+            for i in range(frames):
+                outdata[i] = waveform_buffer[(buffer_start + i) % buffer_size]
+
+            # Update the buffer start position
+            buffer_start = (buffer_start + frames) % buffer_size
+        except Exception as e:
+            print(f"Error in audio callback: {e}")
+            outdata.fill(0)
 
     async def generate_audio():
         nonlocal buffer_end, waveform_buffer
         while True:
-            # Generate new audio data and append to the buffer
-            new_waveform = synth.mix_notes()
-            new_frames = len(new_waveform)
+            try:
+                # Generate new audio data and append to the buffer
+                new_waveform = synth.mix_notes()
+                new_frames = len(new_waveform)
 
-            # Write new data into the buffer
-            for i in range(new_frames):
-                waveform_buffer[(buffer_end + i) % buffer_size] = new_waveform[i]
+                # Write new data into the buffer
+                for i in range(new_frames):
+                    waveform_buffer[(buffer_end + i) % buffer_size] = new_waveform[i]
 
-            # Update the buffer end position
-            buffer_end = (buffer_end + new_frames) % buffer_size
+                # Update the buffer end position
+                buffer_end = (buffer_end + new_frames) % buffer_size
 
-            # Sleep to match real-time audio generation
-            await asyncio.sleep(new_frames / SAMPLE_RATE)
+                # Sleep to match real-time audio generation
+                await asyncio.sleep(new_frames / SAMPLE_RATE)
+            except Exception as e:
+                print(f"Error generating audio: {e}")
+                await asyncio.sleep(0.1)  # Sleep a bit before retrying
 
-    # Start audio stream
-    with sd.OutputStream(samplerate=SAMPLE_RATE, channels=1, blocksize=2048, callback=audio_callback):
-        await generate_audio()
+    # Start audio stream with error handling
+    try:
+        # Try to use dummy device for Replit environment
+        stream = sd.OutputStream(
+            samplerate=SAMPLE_RATE,
+            channels=1,
+            blocksize=2048,
+            callback=audio_callback,
+            device='default'  # Use default device
+        )
+        print("Successfully created audio stream")
+        with stream:
+            await generate_audio()
+    except Exception as e:
+        print(f"Error setting up audio stream: {e}")
+        # Continue without audio output in Replit environment
+        while True:
+            await generate_audio()
 
 async def midi_listener(synth):
     midi_handler = MidiHandler()
@@ -75,20 +108,33 @@ async def midi_listener(synth):
         midi_handler.close()
 
 def main():
-    app = QApplication(sys.argv)
-    synth = Synth()
-    gui = SynthGUI(synth)
-    gui.show()
-    
-    # Create event loop
-    loop = asyncio.get_event_loop()
-    
-    # Start audio and MIDI processing in background
-    loop.create_task(audio_output_loop(synth))
-    loop.create_task(midi_listener(synth))
-    
-    # Run Qt event loop
-    sys.exit(app.exec_())
+    try:
+        print("Initializing QApplication...")
+        app = QApplication(sys.argv)
+        
+        print("Creating Synth instance...")
+        synth = Synth()
+        
+        print("Creating GUI...")
+        gui = SynthGUI(synth)
+        gui.show()
+        
+        print("Setting up event loop...")
+        loop = asyncio.get_event_loop()
+        
+        # Start audio and MIDI processing in background
+        print("Starting audio processing...")
+        loop.create_task(audio_output_loop(synth))
+        
+        print("Starting MIDI listener...")
+        loop.create_task(midi_listener(synth))
+        
+        print("Running Qt event loop...")
+        # Run Qt event loop
+        sys.exit(app.exec_())
+    except Exception as e:
+        print(f"Error in main: {str(e)}")
+        raise
 
 if __name__ == "__main__":
     main()
