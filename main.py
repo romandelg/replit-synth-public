@@ -1,8 +1,12 @@
+
 import asyncio
-import numpy as np  # Import numpy for array operations
+import numpy as np
 import sounddevice as sd
 from audio import Synth
 from midi import MidiHandler
+from PyQt5.QtWidgets import QApplication
+from gui import SynthGUI
+import sys
 
 SAMPLE_RATE = 44100
 
@@ -53,7 +57,6 @@ async def audio_output_loop(synth):
     with sd.OutputStream(samplerate=SAMPLE_RATE, channels=1, blocksize=2048, callback=audio_callback):
         await generate_audio()
 
-
 async def midi_listener(synth):
     midi_handler = MidiHandler()
     try:
@@ -71,12 +74,21 @@ async def midi_listener(synth):
     finally:
         midi_handler.close()
 
-async def main():
+def main():
+    app = QApplication(sys.argv)
     synth = Synth()
-    await asyncio.gather(
-        audio_output_loop(synth),
-        midi_listener(synth)
-    )
+    gui = SynthGUI(synth)
+    gui.show()
+    
+    # Create event loop
+    loop = asyncio.get_event_loop()
+    
+    # Start audio and MIDI processing in background
+    loop.create_task(audio_output_loop(synth))
+    loop.create_task(midi_listener(synth))
+    
+    # Run Qt event loop
+    sys.exit(app.exec_())
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
