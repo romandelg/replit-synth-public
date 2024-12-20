@@ -10,12 +10,8 @@ from PyQt5.QtCore import Qt
 from gui import SynthGUI
 import sys
 
-# Configure Qt for headless/offscreen rendering
-os.environ['QT_QPA_PLATFORM'] = 'offscreen'
-os.environ['QT_LOGGING_RULES'] = '*.debug=false;qt.qpa.*=false'
-os.environ['QT_FONT_DPI'] = '96'
-os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-runner'
-os.environ['DISPLAY'] = ':0'  # Virtual display for headless operation
+# Configure Qt for local display
+os.environ['QT_AUTO_SCREEN_SCALE_FACTOR'] = '1'
 
 SAMPLE_RATE = 44100
 

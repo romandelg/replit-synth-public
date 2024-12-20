@@ -15,9 +15,8 @@ class SynthGUI(QMainWindow):
         self.setWindowTitle('MIDI Synthesizer')
         self.setGeometry(100, 100, 1200, 800)
         
-        # Configure for headless/offscreen rendering
-        self.setAttribute(Qt.WA_DontShowOnScreen, True)
-        self.setAttribute(Qt.WA_ShowWithoutActivating, True)
+        # Configure for local display
+        self.setWindowFlag(Qt.WindowStaysOnTopHint)
         
         # Create main widget and layout
         main_widget = QWidget()
