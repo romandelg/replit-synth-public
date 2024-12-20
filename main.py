@@ -14,7 +14,8 @@ import sys
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 os.environ['QT_LOGGING_RULES'] = '*.debug=false;qt.qpa.*=false;qt.fonts.*=false'
 os.environ['QT_FONT_DPI'] = '96'
-os.environ['QT_QPA_FONTDIR'] = '/usr/share/fonts'
+os.environ['QT_QPA_FONTDIR'] = '/usr/local/share/fonts/dejavu'
+os.environ['FONTCONFIG_PATH'] = '/usr/local/share/fonts'
 os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-runner'
 os.environ['DISPLAY'] = ':0'  # Virtual display for headless operation
 
