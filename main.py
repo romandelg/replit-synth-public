@@ -12,8 +12,9 @@ import sys
 
 # Configure Qt for headless/offscreen rendering
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
-os.environ['QT_LOGGING_RULES'] = '*.debug=false;qt.qpa.*=false;qt.qpa.fonts.*=false'
+os.environ['QT_LOGGING_RULES'] = '*.debug=false;qt.qpa.*=false;qt.fonts.*=false'
 os.environ['QT_FONT_DPI'] = '96'
+os.environ['QT_QPA_FONTDIR'] = '/usr/share/fonts'
 os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-runner'
 os.environ['DISPLAY'] = ':0'  # Virtual display for headless operation
 
@@ -78,9 +79,10 @@ async def audio_output_loop(synth):
         stream = sd.OutputStream(
             samplerate=SAMPLE_RATE,
             channels=1,
-            blocksize=2048,
+            blocksize=1024,
             callback=audio_callback,
-            device='default'  # Use default device
+            device=None,  # Let sounddevice choose the best available device
+            latency='high'  # Use high latency for better stability
         )
         print("Successfully created audio stream")
         with stream:
