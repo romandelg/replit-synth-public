@@ -7,3 +7,4 @@ scipy>=1.11.0
 pyqt5
 pyqt5-tools
 pyqtgraph
+
