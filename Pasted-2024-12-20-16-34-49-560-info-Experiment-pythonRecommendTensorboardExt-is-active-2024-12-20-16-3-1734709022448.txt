@@ -1,0 +1,172 @@
+2024-12-20 16:34:49.560 [info] Experiment 'pythonRecommendTensorboardExt' is active
+2024-12-20 16:34:49.560 [info] Experiment 'pythonSurveyNotification' is active
+2024-12-20 16:34:49.560 [info] Experiment 'pythonTerminalEnvVarActivation' is active
+2024-12-20 16:34:49.560 [info] Experiment 'pythonTestAdapter' is active
+2024-12-20 16:34:49.560 [warning] Dir "c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\.pixi\envs" is not watchable (directory does not exist)
+2024-12-20 16:34:49.604 [info] Python interpreter path: ~\AppData\Local\Programs\Python\Python313\python.exe
+2024-12-20 16:34:49.981 [info] > pyenv which python
+2024-12-20 16:34:49.981 [info] cwd: ~\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public
+2024-12-20 16:34:53.150 [info] Starting Pylance language server.
+2024-12-20 16:35:34.794 [info] Send text to terminal: & C:/Users/roman/AppData/Local/Programs/Python/Python313/python.exe "c:/Users/roman/OneDrive/Documentos/VS STUDIO CODE/replit-synth-public/main.py"
+2024-12-20 16:35:56.315 [info] Selected workspace c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public for creating virtual environment.
+2024-12-20 16:35:56.328 [info] Starting Environment refresh
+2024-12-20 16:35:56.328 [info] Searching for windows registry interpreters
+2024-12-20 16:35:56.328 [info] Searching windows known paths locator
+2024-12-20 16:35:56.329 [info] Searching for pyenv environments
+2024-12-20 16:35:56.329 [info] Searching for conda environments
+2024-12-20 16:35:56.329 [info] Searching for global virtual environments
+2024-12-20 16:35:56.329 [info] Searching for custom virtual environments
+2024-12-20 16:35:56.329 [info] Searching for windows store envs
+2024-12-20 16:35:56.334 [info] > conda info --json
+2024-12-20 16:35:56.335 [info] > hatch env show --json
+2024-12-20 16:35:56.335 [info] cwd: ~\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public
+2024-12-20 16:35:56.341 [info] pyenv is not installed
+2024-12-20 16:35:56.341 [info] Finished searching for pyenv environments: 12 milliseconds
+2024-12-20 16:35:56.356 [info] Finished searching for custom virtual envs: 27 milliseconds
+2024-12-20 16:35:56.365 [info] Finished searching for global virtual envs: 36 milliseconds
+2024-12-20 16:35:56.383 [info] > ~\AppData\Local\Programs\Python\Python313\python.exe -I ~\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\get_output_via_markers.py ~\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\interpreterInfo.py
+2024-12-20 16:35:56.384 [info] Finished searching for windows store envs: 55 milliseconds
+2024-12-20 16:35:56.403 [info] > ~\AppData\Local\Microsoft\WindowsApps\python3.11.exe -I ~\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\get_output_via_markers.py ~\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\interpreterInfo.py
+2024-12-20 16:35:56.404 [info] Finished searching windows known paths locator: 78 milliseconds
+2024-12-20 16:35:56.656 [info] Finished searching for windows registry interpreters: 337 milliseconds
+2024-12-20 16:35:56.658 [info] Environments refresh paths discovered (event): 339 milliseconds
+2024-12-20 16:35:56.658 [info] Environments refresh paths discovered: 340 milliseconds
+2024-12-20 16:35:56.733 [info] Environments refresh finished (event): 414 milliseconds
+2024-12-20 16:35:56.735 [info] Environment refresh took 418 milliseconds
+2024-12-20 16:36:01.768 [info] Selected interpreter C:\Users\roman\AppData\Local\Programs\Python\Python313\python.exe for creating virtual environment.
+2024-12-20 16:36:06.293 [info] Running Env creation script:  [
+  'C:\\Users\\roman\\AppData\\Local\\Programs\\Python\\Python313\\python.exe',
+  'c:\\Users\\roman\\.vscode\\extensions\\ms-python.python-2024.22.0-win32-x64\\python_files\\create_venv.py',
+  '--git-ignore',
+  '--requirements',
+  'c:\\Users\\roman\\OneDrive\\Documentos\\VS STUDIO CODE\\replit-synth-public\\requirements.txt'
+]
+2024-12-20 16:36:06.293 [info] > ~\AppData\Local\Programs\Python\Python313\python.exe ~\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\create_venv.py --git-ignore --requirements "~\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt"
+2024-12-20 16:36:06.293 [info] cwd: ~\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public
+2024-12-20 16:36:06.419 [info] Running: C:\Users\roman\AppData\Local\Programs\Python\Python313\python.exe -m venv .venv
+2024-12-20 16:36:07.680 [info] > "~\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\.venv\Scripts\python.exe" -I ~\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\get_output_via_markers.py ~\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\interpreterInfo.py
+2024-12-20 16:36:07.680 [info] Environments refresh paths discovered: 22 milliseconds
+2024-12-20 16:36:07.768 [info] Environments refresh finished (event): 110 milliseconds
+2024-12-20 16:36:14.135 [info] CREATED_VENV:c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\.venv\Scripts\python.exe
+2024-12-20 16:36:14.135 [info] CREATE_VENV.UPGRADING_PIP
+Running: c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\.venv\Scripts\python.exe -m pip install --upgrade pip
+2024-12-20 16:36:15.817 [info] Requirement already satisfied: pip in c:\users\roman\onedrive\documentos\vs studio code\replit-synth-public\.venv\lib\site-packages (24.3.1)
+2024-12-20 16:36:16.382 [info] CREATE_VENV.UPGRADED_PIP
+VENV_INSTALLING_REQUIREMENTS: ['c:\\Users\\roman\\OneDrive\\Documentos\\VS STUDIO CODE\\replit-synth-public\\requirements.txt']
+VENV_INSTALLING_REQUIREMENTS: c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt
+Running: c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\.venv\Scripts\python.exe -m pip install -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt
+2024-12-20 16:36:17.454 [info] Collecting numpy>=1.24.0 (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 2))
+2024-12-20 16:36:17.478 [info]   Using cached numpy-2.2.0-cp313-cp313-win_amd64.whl.metadata (60 kB)
+2024-12-20 16:36:17.567 [info] Collecting sounddevice>=0.4.6 (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 3))
+2024-12-20 16:36:17.576 [info]   Using cached sounddevice-0.5.1-py3-none-win_amd64.whl.metadata (1.4 kB)
+2024-12-20 16:36:17.693 [info] Collecting pygame>=2.5.0 (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 4))
+2024-12-20 16:36:17.718 [info]   Using cached pygame-2.6.1-cp313-cp313-win_amd64.whl.metadata (13 kB)
+2024-12-20 16:36:17.787 [info] Collecting PyQt5>=5.15.0 (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 5))
+2024-12-20 16:36:17.802 [info]   Using cached PyQt5-5.15.11-cp38-abi3-win_amd64.whl.metadata (2.1 kB)
+2024-12-20 16:36:17.928 [info] Collecting scipy>=1.11.0 (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 6))
+2024-12-20 16:36:17.949 [info]   Using cached scipy-1.14.1-cp313-cp313-win_amd64.whl.metadata (60 kB)
+2024-12-20 16:36:18.135 [info] Collecting pyqt5-tools (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 8))
+2024-12-20 16:36:18.282 [info]   Downloading pyqt5_tools-5.15.9.3.3-py3-none-any.whl.metadata (8.3 kB)
+2024-12-20 16:36:18.339 [info] Collecting pyqtgraph (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 9))
+2024-12-20 16:36:18.348 [info]   Using cached pyqtgraph-0.13.7-py3-none-any.whl.metadata (1.3 kB)
+2024-12-20 16:36:18.448 [info] Collecting CFFI>=1.0 (from sounddevice>=0.4.6->-r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 3))
+2024-12-20 16:36:18.463 [info]   Using cached cffi-1.17.1-cp313-cp313-win_amd64.whl.metadata (1.6 kB)
+2024-12-20 16:36:18.517 [info] Collecting PyQt5-sip<13,>=12.15 (from PyQt5>=5.15.0->-r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 5))
+2024-12-20 16:36:18.531 [info]   Using cached PyQt5_sip-12.16.1-cp313-cp313-win_amd64.whl.metadata (439 bytes)
+2024-12-20 16:36:18.569 [info] Collecting PyQt5-Qt5<5.16.0,>=5.15.2 (from PyQt5>=5.15.0->-r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 5))
+2024-12-20 16:36:18.581 [info]   Using cached PyQt5_Qt5-5.15.2-py3-none-win_amd64.whl.metadata (552 bytes)
+2024-12-20 16:36:18.628 [info] Collecting click (from pyqt5-tools->-r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 8))
+2024-12-20 16:36:18.644 [info]   Using cached click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+2024-12-20 16:36:18.650 [info] Collecting PyQt5>=5.15.0 (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 5))
+2024-12-20 16:36:18.666 [info]   Downloading PyQt5-5.15.9-cp37-abi3-win_amd64.whl.metadata (2.2 kB)
+2024-12-20 16:36:18.812 [info] INFO: pip is looking at multiple versions of pyqt5-tools to determine which version is compatible with other requirements. This could take a while.
+2024-12-20 16:36:18.812 [info] Collecting pyqt5-tools (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 8))
+2024-12-20 16:36:18.831 [info]   Downloading pyqt5_tools-5.15.4.3.2-py3-none-any.whl.metadata (8.3 kB)
+2024-12-20 16:36:18.856 [info] Collecting PyQt5>=5.15.0 (from -r c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\requirements.txt (line 5))
+2024-12-20 16:36:18.888 [info]   Downloading PyQt5-5.15.4.tar.gz (3.3 MB)
+2024-12-20 16:36:19.017 [info]      ---------------------------------------- 3.3/3.3 MB
+2024-12-20 16:36:19.017 [info] 37.1 MB/s eta 0:00:00
+2024-12-20 16:36:20.344 [info]   Installing build dependencies: started
+2024-12-20 16:36:28.874 [info]   Installing build dependencies: finished with status 'done'
+2024-12-20 16:36:28.875 [info]   Getting requirements to build wheel: started
+2024-12-20 16:36:29.185 [info]   Getting requirements to build wheel: finished with status 'done'
+2024-12-20 16:36:29.191 [info]   Preparing metadata (pyproject.toml): started
+2024-12-20 16:36:29.506 [info]   Preparing metadata (pyproject.toml): finished with status 'error'
+2024-12-20 16:36:29.510 [info]   error: subprocess-exited-with-error
+  
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [32 lines of output]
+2024-12-20 16:36:29.510 [info]     pyproject.toml: line 7: using '[tool.sip.metadata]' to specify the project metadata is deprecated and will be removed in SIP v7.0.0, use '[project]' instead
+      Traceback (most recent call last):
+        File "c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\.venv\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 353, in <module>
+          main()
+          ~~~~^^
+        File "c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\.venv\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 335, in main
+          json_out['return_val'] = hook(**hook_input['kwargs'])
+                                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+        File "c:\Users\roman\OneDrive\Documentos\VS STUDIO CODE\replit-synth-public\.venv\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 152, in prepare_metadata_for_build_wheel
+          whl_basename = backend.build_wheel(metadata_directory, config_settings)
+        File "C:\Users\roman\AppData\Local\Temp\pip-build-env-a6jkt9wk\overlay\Lib\site-packages\sipbuild\api.py", line 28, in build_wheel
+          project = AbstractProject.bootstrap('wheel',
+                  arguments=_convert_config_settings(config_settings))
+        File "C:\Users\roman\AppData\Local\Temp\pip-build-env-a6jkt9wk\overlay\Lib\site-packages\sipbuild\abstract_project.py", line 74, in bootstrap
+          project.setup(pyproject, tool, tool_description)
+          ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Users\roman\AppData\Local\Temp\pip-build-env-a6jkt9wk\overlay\Lib\site-packages\sipbuild\project.py", line 608, in setup
+          self.apply_user_defaults(tool)
+          ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+        File "C:\Users\roman\AppData\Local\Temp\pip-install-qn7lc0ta\pyqt5_2dce14a9e5714eb68e1b6d38743065f1\project.py", line 63, in apply_user_defaults
+          super().apply_user_defaults(tool)
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+        File "C:\Users\roman\AppData\Local\Temp\pip-build-env-a6jkt9wk\overlay\Lib\site-packages\pyqtbuild\project.py", line 51, in apply_user_defaults
+          super().apply_user_defaults(tool)
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+        File "C:\Users\roman\AppData\Local\Temp\pip-build-env-a6jkt9wk\overlay\Lib\site-packages\sipbuild\project.py", line 237, in apply_user_defaults
+          self.builder.apply_user_defaults(tool)
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+        File "C:\Users\roman\AppData\Local\Temp\pip-build-env-a6jkt9wk\overlay\Lib\site-packages\pyqtbuild\builder.py", line 49, in apply_user_defaults
+          raise PyProjectOptionException('qmake',
+                  "specify a working qmake or add it to PATH")
+      sipbuild.pyproject.PyProjectOptionException
+      [end of output]
+2024-12-20 16:36:29.510 [info] note: This error originates from a subprocess, and is likely not a problem with pip.
+2024-12-20 16:36:29.748 [info] error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+2024-12-20 16:36:30.218 [info] Traceback (most recent call last):
+2024-12-20 16:36:30.220 [info]   File "c:\Users\roman\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\create_venv.py", line 96, in run_process
+    subprocess.run(args, cwd=os.getcwd(), check=True)  # noqa: PTH109
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\roman\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['c:\\Users\\roman\\OneDrive\\Documentos\\VS STUDIO CODE\\replit-synth-public\\.venv\\Scripts\\python.exe', '-m', 'pip', 'install', '-r', 'c:\\Users\\roman\\OneDrive\\Documentos\\VS STUDIO CODE\\replit-synth-public\\requirements.txt']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+2024-12-20 16:36:30.222 [info]   File "c:\Users\roman\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\create_venv.py", line 262, in <module>
+    main(sys.argv[1:])
+    ~~~~^^^^^^^^^^^^^^
+  File "c:\Users\roman\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\create_venv.py", line 254, in main
+    install_requirements(venv_path, requirements)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\roman\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\create_venv.py", line 116, in install_requirements
+    run_process(
+    ~~~~~~~~~~~^
+        [venv_path, "-m", "pip", "install", "-r", requirement],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "CREATE_VENV.PIP_FAILED_INSTALL_REQUIREMENTS",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\roman\.vscode\extensions\ms-python.python-2024.22.0-win32-x64\python_files\create_venv.py", line 98, in run_process
+    raise VenvError(error_message) from exc
+VenvError: CREATE_VENV.PIP_FAILED_INSTALL_REQUIREMENTS
+2024-12-20 16:36:30.233 [error] Error while running venv creation script:  CREATE_VENV.PIP_FAILED_INSTALL_REQUIREMENTS
+2024-12-20 16:36:30.233 [error] CREATE_VENV.PIP_FAILED_INSTALL_REQUIREMENTS
